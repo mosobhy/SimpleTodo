@@ -16,7 +16,11 @@ todo.post('/', async (req: RequestWithUser, res: Response) => {
     res.json(todo);
 });
   
-
+todo.get('/', async (req: RequestWithUser, res: Response) => {
+    const userId = await User.findOne({ username: req.user?.username })
+    const todos = await Todo.find({ user: userId });
+    res.json(todos);
+});
   
 todo.put('/:id', async (req: RequestWithUser, res: Response) => {
     const id = req.params.id;
